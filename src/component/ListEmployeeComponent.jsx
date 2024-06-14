@@ -20,7 +20,7 @@ const ListEmployeeComponent = () => {
 
     const [employees, setEmployees] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(8);
+    const [itemsPerPage] = useState(5);
     const [searchEmp, setSearchEmp] = useState('');
     const navigator = useNavigate();
 
