@@ -1,5 +1,5 @@
-import React from 'react'
-import LoginComponent from './LoginComponent'
+import React, { useState } from 'react'
+import { loginList } from '../services/EmployeeService';
 
 const HomeComponent = () => {
     const style = {
