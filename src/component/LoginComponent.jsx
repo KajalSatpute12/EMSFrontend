@@ -28,9 +28,9 @@ const LoginComponent = () => {
     loginList().then((response) => {
       setUsers(response.data);
     }).catch(
-        error => { console.error(error); }
+      error => { console.error(error); }
     )
-}, [])
+  }, [])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -40,11 +40,11 @@ const LoginComponent = () => {
 
       let isAuthenticated = false;
       users.forEach(res => {
-        if(res.username === username && res.password === password){
+        if (res.username === username && res.password === password) {
           isAuthenticated = true;
         }
       })
-  
+
       if (isAuthenticated) {
         setIsLoggedIn(true);
         setErrorMessage('');

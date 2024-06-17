@@ -10,6 +10,7 @@ export const getRole = (id) => axios.get(REST_API_BASE_URL.concat('getRoleById?i
 export const deptList = () => axios.get(REST_API_BASE_URL.concat('getDepartmentDetails'));
 export const getDept = (id) => axios.get(REST_API_BASE_URL.concat('getDepartmentById?id=')+ id);
 export const loginList = () => axios.get(REST_API_BASE_URL.concat('getLoginDetails'));
+export const managerList = () => axios.get(REST_API_BASE_URL.concat('getManagerDetails'));
 
 export const addEmployee = (employee) => axios.post(REST_API_BASE_URL.concat('saveEmployeeDetails'), employee);
 export const  addRole = (role) => axios.post(REST_API_BASE_URL.concat('saveRoleDetails'), role);

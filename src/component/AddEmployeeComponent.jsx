@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { deptList, roleList, addEmployee, empList, getRole, getEmp, updateEmp } from '../services/EmployeeService'
+import {  roleList, addEmployee, getEmp, updateEmp, managerList } from '../services/EmployeeService'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const AddEmployeeComponent = () => {
@@ -27,15 +27,13 @@ const AddEmployeeComponent = () => {
   const nav = useNavigate();
   const {id} = useParams();
   const [roles, setRoles] = useState([]);
-  const [departments, setDepartments] = useState([]);
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
   const [emailId, setEmailId] = useState('');
   const [role, setRole] = useState('');
-  const [dept, setDept] = useState('');
-  const [emp, setEmp] = useState([]);
+  const [managerId, setManagerId] = useState('');
   const [success, setSuccess] = useState('');
-  const [managerName, setManagerName] = useState([]);
+  const [manager, setManager] = useState([]);
   const [errors, setErrors] = useState({
     fname: '',
     lname: '',
@@ -53,7 +51,7 @@ const AddEmployeeComponent = () => {
         setLname(response.data.last_name);
         setEmailId(response.data.email_id);
         setRole(response.data.role_id);
-        setDept(response.data.manager_id);
+        setManagerId(response.data.manager_id);
       })
     }
     }, [id])
@@ -65,19 +63,12 @@ const AddEmployeeComponent = () => {
       console.log(error);
     });
 
-    deptList().then((depts) => {
-      setDepartments(depts.data);
+    managerList().then((response) => {
+      setManager(response.data);
+      console.log("Manager Data:", response.data);
     }).catch(error => {
       console.log(error);
-    });
-
-    empList().then((emp) => {
-      setEmp(emp.data);
-    }).catch(error => {
-      console.log(error);
-    });
-
-
+    })
 
   }, []);
 
@@ -91,7 +82,7 @@ const AddEmployeeComponent = () => {
         last_name: lname,
         email_id: emailId,
         role_id: role,
-        manager_id: dept
+        manager_id: managerId
       }
 
       console.log('Entered Data: ', emp);
@@ -115,7 +106,7 @@ const AddEmployeeComponent = () => {
         last_name: lname,
         email_id: emailId,
         role_id: role,
-        manager_id: dept
+        manager_id: managerId
       }
 
       updateEmp(emp, id).then((response) => {
@@ -130,7 +121,7 @@ const AddEmployeeComponent = () => {
     setLname('');
     setEmailId('');
     setRole('');
-    setDept('');
+    setManagerId('');
   }
 
   function validateForm() {
@@ -163,10 +154,10 @@ const AddEmployeeComponent = () => {
       errorsCopy.role = 'Role is required';
     }
 
-    if (dept) {
-      errorsCopy.dept = '';
+    if (managerId) {
+      errorsCopy.managerId = '';
     } else {
-      errorsCopy.dept = 'Department is required';
+      errorsCopy.managerId = 'Department is required';
     }
 
     setErrors(errorsCopy);
@@ -239,17 +230,17 @@ const AddEmployeeComponent = () => {
             {errors.role && <span className='invalid-feedback'>{errors.role}</span>}
           </div>
           <div className='form-group'>
-            <label className='form-label'>Department</label>
-            <select className={`form-control ${errors.dept ? 'is-invalid' : ''}`} value={dept} onChange={(event) => setDept(event.target.value)}>
-              <option value="">Select the Department</option>
+            <label className='form-label'>Manager</label>
+            <select className={`form-control ${errors.managerId ? 'is-invalid' : ''}`} value={managerId} onChange={(event) => setManagerId(event.target.value)}>
+              <option value="">Select the Manager</option>
               {
-                departments.map(option => (
+                manager.map(option => (
                   <option key={option.id} value={option.id}>
                     {option.name}
                   </option>
                 ))}
             </select>
-            {errors.dept && <span className='invalid-feedback'>{errors.dept}</span>}
+            {errors.managerId && <span className='invalid-feedback'>{errors.managerId}</span>}
           </div>
           {
             buttonName()
